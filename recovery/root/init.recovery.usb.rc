@@ -16,6 +16,7 @@ on init
     mkdir /config/usb_gadget/g1/functions/audio_source.0
     mkdir /config/usb_gadget/g1/functions/ncm.0
     mkdir /config/usb_gadget/g1/functions/mass_storage.0
+    mkdir /config/usb_gadget/g1/functions/ffs.fastboot
     mkdir /config/usb_gadget/g1/functions/ffs.adb 0770 shell shell
     mkdir /dev/usb-ffs 0770 shell shell
     mkdir /dev/usb-ffs/adb 0770 shell shell
@@ -50,6 +51,8 @@ on boot
     symlink /config/usb_gadget/g1/functions/ncm.0 /config/usb_gadget/g1/configs/b.1/ncm.0
     symlink /config/usb_gadget/g1/functions/mass_storage.0 /config/usb_gadget/g1/configs/b.1/mass_storage.0
     symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/ffs.adb
+    mkdir /dev/usb-ffs/fastboot 0770 shell system
+    mount functionfs fastboot /dev/usb-ffs/fastboot uid=2000,gid=1000,rmode=0770,fmode=0660
     chown system system /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file
     chmod 0660 /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file
     chown system system /dev/dun
@@ -61,6 +64,7 @@ on boot
 on property:sys.usb.config=none
     write /sys/class/android_usb/android0/enable 0
     stop adbd
+    stop fastbootd
     setprop sys.usb.ffs.ready 0
     stop ss_conn_daemon2_service
     write /config/usb_gadget/g1/bDeviceClass 0
