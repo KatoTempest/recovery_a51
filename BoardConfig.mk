@@ -59,7 +59,7 @@ BOARD_DTBOIMG_PARTITION_SIZE       := 8388608
 
 # TWRP specific build flags
 TW_THEME := portrait_hdpi
-TW_DEVICE_VERSION :=by LichtEstrossx
+TW_DEVICE_VERSION :=Licht-Build
 RECOVERY_SDCARD_ON_DATA := true
 TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel/brightness"
