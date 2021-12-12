@@ -58,8 +58,9 @@ BOARD_RECOVERYIMAGE_PARTITION_SIZE := 71102464
 BOARD_DTBOIMG_PARTITION_SIZE       := 8388608
 
 # TWRP specific build flags
+ALLOW_MISSING_DEPENDENCIES=true
 TW_THEME := portrait_hdpi
-TW_DEVICE_VERSION :=Licht-Build
+TW_DEVICE_VERSION := By Licht
 RECOVERY_SDCARD_ON_DATA := true
 TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel/brightness"
@@ -78,6 +79,11 @@ BOARD_INCLUDE_RECOVERY_DTBO := true
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/recovery_dtbo
 BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt/dtb
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+TW_USE_NEW_MINADBD := true
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_FBE := true
+TW_HAS_MTP := true
+TW_MTP_DEVICE := /dev/mtp_usb
 
 PLATFORM_SECURITY_PATCH := 2021-05-01
 
@@ -91,6 +97,13 @@ BOARD_GOOGLE_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     vendor \
     product \
     odm
+
+TW_RECOVERY_ADDITIONAL_RELINK_FILES += \
+    $(TARGET_OUT_VENDOR_SHARED_LIBRARIES)/hw/android.hardware.keymaster@3.0-impl.so \
+    $(TARGET_OUT_VENDOR_EXECUTABLES)/hw/android.hardware.keymaster@3.0-service \
+    $(TARGET_OUT_VENDOR_SHARED_LIBRARIES)/libkeymaster3device.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so
+
 
 # Haptics
 TW_USE_SAMSUNG_HAPTICS := true
